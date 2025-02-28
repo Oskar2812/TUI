@@ -9,7 +9,6 @@ welcome!
 - **Customizable UI Elements**: Create and modify user interfaces with support for borders, colors, and interactive text elements.
 - **Simple Input Handling**: Handle user input with customizable behaviors, including text and cursor management.
 - **Animation Support**: Display dynamic animations and gifs in the console.
-- **Cross-Platform**: While designed for Windows, the library aims to be lightweight and easy to extend for other platforms.
 
 ## Requirements
 
