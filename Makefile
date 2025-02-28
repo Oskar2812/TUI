@@ -16,11 +16,10 @@ LIB_OBJECTS_DEBUG = $(LIB_OBJECTS:.o=.o.debug)
 all: lib
 
 $(BUILD):
-	mkdir -p $(BUILD)
-	mkdir -p $(BUILD)/examples
+	mkdir $(BUILD)
 
 # Rule to compile object files for the regular build (without debug flags)
-$(BUILD)/%.o: $(SRC)/%.c
+$(BUILD)/%.o: $(SRC)/%.c $(BUILD)
 	$(CLANG) $(CFLAGS) -c $< -o $@
 
 # Rule to compile object files for the debug build (with DEBUG_CFLAGS)
