@@ -5,6 +5,7 @@ CFLAGS = -Wall -Werror
 
 BUILD = build
 SRC = src
+EXAMPLES = $(SRC)/examples
 
 TUI_LIB = libosk_tui.a
 TUI_LIB_DEBUG = libosk_tui_debug.a  # Debug version of the library
@@ -12,7 +13,11 @@ LIB_OBJECTS = $(BUILD)/console_design.o $(BUILD)/user_input.o $(BUILD)/console_g
 LIB_OBJECTS_DEBUG = $(LIB_OBJECTS:.o=.o.debug)
 
 # Default target
-all: test
+all: lib
+
+$(BUILD):
+	mkdir -p $(BUILD)
+	mkdir -p $(BUILD)/examples
 
 # Rule to compile object files for the regular build (without debug flags)
 $(BUILD)/%.o: $(SRC)/%.c
@@ -41,6 +46,14 @@ debug: $(BUILD)/test.o.debug $(TUI_LIB_DEBUG)
 # Target for building the library (non-debug)
 lib: $(TUI_LIB)
 
+examples: $(TUI_LIB)
+	$(CLANG) $(CFLAGS) -c $(EXAMPLES)/processGif.c -o $(BUILD)/processGif.o
+	$(CLANG) $(CFLAGS) $(BUILD)/processGif.o $(TUI_LIB) -o processGif
+	$(CLANG) $(CFLAGS) -c $(EXAMPLES)/simpleAnimation.c -o $(BUILD)/simpleAnimation.o
+	$(CLANG) $(CFLAGS) $(BUILD)/simpleAnimation.o $(TUI_LIB) -o simpleAnimation
+	$(CLANG) $(CFLAGS) -c $(EXAMPLES)/simpleTerminal.c -o $(BUILD)/simpleTerminal.o
+	$(CLANG) $(CFLAGS) $(BUILD)/simpleTerminal.o $(TUI_LIB) -o simpleTerminal
+
 # Clean up the build files
 clean: 
 	del /f /q build\*
@@ -48,4 +61,4 @@ clean:
 	del /f /q *.a
 
 # Mark these targets as phony
-.PHONY: all test clean lib debug clang
+.PHONY: all test clean lib debug examples
